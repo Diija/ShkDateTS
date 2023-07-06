@@ -1,0 +1,24 @@
+{
+  "name": "shk_date",
+  "package-name": "shk_date",
+  "version": "1.0.0",
+  "description": "A date package to ease your life with js.",
+  "main": "index.ts",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Diija",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-loader": "^9.4.4",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "typescript": "^5.1.6"
+  }
+}
