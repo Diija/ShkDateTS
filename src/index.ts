@@ -16,7 +16,7 @@ interface shkDateI {
     seconds: IntRange<0,60>
 }
 
-class ShkDate {
+export class ShkDate {
     private _date: shkDateI = {day: undefined, month: undefined, year: undefined, hours: undefined, minutes: undefined, seconds: undefined};
     
     private _dateFormat: allowedDateFormat = 'YMD';
@@ -309,5 +309,3 @@ class ShkDate {
     public getExtMonth(): string { return this._dicMonth[this._date.month]}
 
 }
-
-module.exports = { ShkDate };
