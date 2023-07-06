@@ -1,16 +1,17 @@
 {
-  "name": "shk_date",
-  "package-name": "shk_date",
+  "name": "shk-date-ts",
+  "package-name": "ShkDateTS",
   "version": "1.0.0",
   "description": "A date package to ease your life with js.",
-  "main": "index.ts",
+  "repository": "Diija/ShkDateTS",
+  "main": "./src/index.ts",
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Diija",
+  "author": "Emilighta",
   "license": "MIT",
   "devDependencies": {
     "ts-loader": "^9.4.4",

@@ -310,7 +310,4 @@ class ShkDate {
 
 }
 
-let date = new ShkDate();
-console.log(date.dateTime);
-
 module.exports = { ShkDate };
