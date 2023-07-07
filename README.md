@@ -1,2 +1,3 @@
-# ShkDateTS
-Date class written to ease the default JS date experience.
+# Shk-Date
+
+A Date package to ease your life with the default JS date experience.
