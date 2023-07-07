@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "A date package to ease your life with js.",
   "repository": "Diija/ShkDateTS",
-  "main": "./src/index.ts",
+  "main": "./src/index.js",
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack",

@@ -1,5 +1,4 @@
-"use strict";
-class ShkDate {
+export class ShkDate {
     constructor(date) {
         this._date = { day: undefined, month: undefined, year: undefined, hours: undefined, minutes: undefined, seconds: undefined };
         this._dateFormat = 'YMD';
@@ -7,6 +6,8 @@ class ShkDate {
         this._dateSeparator = '-'; //Date value separator. Examples: 01/01/0001 (/). 01.01.0001 (.)
         this._timeSeparator = ':'; //Time value separator. Examples: 15:15:00 (:). 15.15.00 (.) ; If separator set as 'tempo' it will set h to hour, m to minutes and s to seconds. Exemple: 01h02m03s. 
         this._fillZeros = true; //Add zero to values. Example 01/01/0001 or 1/1/1
+        this._matchEmpty = true; //If you don't provide a value in the date, match it with today. Example: '-07-07' will fulfill with '2023-07-07' (The current year).
+        this._language = navigator.language;
         this._checkIrregular = true; //Check irregular handling on update such as leap years, this is disabled when there is need to check the date as a whole and not only one part of it while updating the date.
         this._jsYear = new Date().getFullYear();
         this._jsMonth = new Date().getMonth();
@@ -14,20 +15,6 @@ class ShkDate {
         this._jsHour = new Date().getHours();
         this._jsMinute = new Date().getMinutes();
         this._jsSecond = new Date().getSeconds();
-        this._dicMonth = {
-            1: 'Jan',
-            2: 'Feb',
-            3: 'Mar',
-            4: 'Apr',
-            5: 'May',
-            6: 'Jun',
-            7: 'Jul',
-            8: 'Aug',
-            9: 'Sep',
-            10: 'Oct',
-            11: 'Nov',
-            12: 'Dec'
-        };
         if (!date) {
             this._date.day = this._jsDay;
             this._date.month = (this._jsMonth + 1);
@@ -46,9 +33,16 @@ class ShkDate {
                     this.setTime(dateSpaceSplit[1]);
                 }
                 else {
-                    this._date.hours = this._jsHour;
-                    this._date.minutes = this._jsMinute;
-                    this._date.seconds = this._jsSecond;
+                    if (this._matchEmpty) {
+                        this._date.hours = this._jsHour;
+                        this._date.minutes = this._jsMinute;
+                        this._date.seconds = this._jsSecond;
+                    }
+                    else {
+                        this._date.hours = undefined;
+                        this._date.minutes = undefined;
+                        this._date.seconds = undefined;
+                    }
                 }
                 this.setDate(dateSpaceSplit[0]);
             }
@@ -106,6 +100,22 @@ class ShkDate {
     ;
     setFillZeros(fillZeros) { this._fillZeros = fillZeros; }
     ;
+    get matchEmpty() { return this.getMatchEmpty(); }
+    ;
+    getMatchEmpty() { return this._matchEmpty; }
+    ;
+    set matchEmpty(matchEmpty) { this.setMatchEmpty(matchEmpty); }
+    ;
+    setMatchEmpty(matchEmpty) { this._matchEmpty = matchEmpty; }
+    ;
+    set language(language) { this.setLanguage(language); }
+    ;
+    setLanguage(language) {
+        if (!language)
+            return;
+        this._language = language;
+    }
+    ;
     get year() { return this.getYear(); }
     ;
     getYear() { return this._date.year < 10 ? '000' + this._date.year : this._date.year < 100 ? '00' + this._date.year : this._date.year < 1000 ? '0' + this._date.year : this._date.year.toString(); }
@@ -114,8 +124,12 @@ class ShkDate {
     ;
     setYear(year) {
         let reYear = '^[0-9]{1,4}$';
-        if (year.toString().trim() === '')
-            year = this._jsYear.toString();
+        if (year.toString().trim() === '') {
+            if (this._matchEmpty)
+                year = this._jsYear.toString();
+            else
+                year = undefined;
+        }
         year = parseInt(year.toString());
         if (new RegExp(`^${reYear}$`).test(year.toString())) {
             if (this._checkIrregular) {
@@ -140,8 +154,12 @@ class ShkDate {
     ;
     setMonth(month) {
         let reMonth = '^(0?[1-9]|1[0-2])$';
-        if (month.toString().trim() === '')
-            month = (this._jsMonth + 1).toString();
+        if (month.toString().trim() === '') {
+            if (this._matchEmpty)
+                month = (this._jsMonth + 1).toString();
+            else
+                month = undefined;
+        }
         month = parseInt(month.toString());
         if (new RegExp(`^${reMonth}$`).test(month.toString())) {
             if (this._checkIrregular) {
@@ -166,8 +184,12 @@ class ShkDate {
     ;
     setDay(day) {
         let reDay = '^([12]?[0-9]|0[1-9]|3[01])$';
-        if (day.toString().trim() === '')
-            day = this._jsDay.toString();
+        if (day.toString().trim() === '') {
+            if (this._matchEmpty)
+                day = this._jsDay.toString();
+            else
+                day = undefined;
+        }
         day = parseInt(day.toString());
         if (new RegExp(`^${reDay}$`).test(day.toString())) {
             if (this._checkIrregular) {
@@ -192,8 +214,12 @@ class ShkDate {
     ;
     setHours(hours) {
         let reHour = '^([01]?[0-9]|2[0-3])$';
-        if (hours.toString().trim() === '')
-            hours = this._jsHour.toString();
+        if (hours.toString().trim() === '') {
+            if (this._matchEmpty)
+                hours = this._jsHour.toString();
+            else
+                hours = undefined;
+        }
         if (new RegExp(`^${reHour}$`).test(hours.toString())) {
             this._date.hours = parseInt(hours.toString());
         }
@@ -209,8 +235,12 @@ class ShkDate {
     ;
     setMinutes(minutes) {
         let reMinute = '^[0-5]?[0-9]$';
-        if (minutes.toString().trim() === '')
-            minutes = this._jsMinute.toString();
+        if (minutes.toString().trim() === '') {
+            if (this._matchEmpty)
+                minutes = this._jsMinute.toString();
+            else
+                minutes = undefined;
+        }
         if (new RegExp(`^${reMinute}$`).test(minutes.toString())) {
             this._date.minutes = parseInt(minutes.toString());
         }
@@ -225,8 +255,12 @@ class ShkDate {
     ;
     setSeconds(seconds) {
         let reSecond = '^[0-5]?[0-9]$';
-        if (!seconds || seconds.toString().trim() === '')
-            seconds = this._jsSecond.toString();
+        if (!seconds || seconds.toString().trim() === '') {
+            if (this._matchEmpty)
+                seconds = this._jsSecond.toString();
+            else
+                seconds = undefined;
+        }
         if (new RegExp(`^${reSecond}$`).test(seconds.toString())) {
             this._date.seconds = parseInt(seconds.toString());
         }
@@ -333,9 +367,16 @@ class ShkDate {
     ;
     setTime(time) {
         this.updateJSDate();
-        this._date.hours = this._jsHour;
-        this._date.minutes = this._jsMinute;
-        this._date.seconds = this._jsSecond;
+        if (this._matchEmpty) {
+            this._date.hours = this._jsHour;
+            this._date.minutes = this._jsMinute;
+            this._date.seconds = this._jsSecond;
+        }
+        else {
+            this._date.hours = undefined;
+            this._date.minutes = undefined;
+            this._date.seconds = undefined;
+        }
         let dateTimeSplit = time.split(this._timeSeparator);
         if (dateTimeSplit.length > 3)
             throw ('Invalid date format. The string double dotting is wrong. Example: YYYY-MM-DD HH:MM:SS');
@@ -360,14 +401,41 @@ class ShkDate {
             this.setTime(dateSpaceSplit[1]);
         }
         else {
-            this._date.hours = this._jsHour;
-            this._date.minutes = this._jsMinute;
-            this._date.seconds = this._jsSecond;
+            if (this._matchEmpty) {
+                this._date.hours = this._jsHour;
+                this._date.minutes = this._jsMinute;
+                this._date.seconds = this._jsSecond;
+            }
+            else {
+                this._date.hours = undefined;
+                this._date.minutes = undefined;
+                this._date.seconds = undefined;
+            }
         }
         this.setDate(dateSpaceSplit[0]);
     }
     get extMonth() { return this.getExtMonth(); }
     ;
-    getExtMonth() { return this._dicMonth[this._date.month]; }
+    getExtMonth() {
+        let hFillZeros = this._fillZeros === true;
+        let hFormat = ('' + this._dateFormat);
+        this._fillZeros = false;
+        this._dateFormat = 'YMD';
+        let date = new Date(this.getDate());
+        this._fillZeros = hFillZeros;
+        this._dateFormat = hFormat;
+        return new Intl.DateTimeFormat(this._language, { month: "long" }).format(date);
+    }
+    get weekDay() { return this.getWeekDay(); }
+    ;
+    getWeekDay() {
+        let hFillZeros = this._fillZeros === true;
+        let hFormat = ('' + this._dateFormat);
+        this._fillZeros = false;
+        this._dateFormat = 'YMD';
+        let date = new Date(this.getDate());
+        this._fillZeros = hFillZeros;
+        this._dateFormat = hFormat;
+        return new Intl.DateTimeFormat(this._language, { weekday: "long" }).format(date);
+    }
 }
-module.exports = { ShkDate };
