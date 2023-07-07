@@ -1,22 +1,23 @@
 type Enumerate<N extends number, Acc extends number[] = []> = Acc['length'] extends N
   ? Acc[number]
-  : Enumerate<N, [...Acc, Acc['length']]>
+  : Enumerate<N, [...Acc, Acc['length']]>;
 
-type IntRange<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>
+type IntRange<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>;
 type allowedDateFormat = 'DMY' | 'DYM' | 'MDY' | 'MYD' | 'YDM' | 'YMD';
 type allowedTimeFormat = 'HMS' | 'HSM' | 'MHS' | 'MSH' | 'SHM' | 'SMH';
+type allowedLanguages = 'en' | 'en-US' | 'en-GB' | 'en-AU' | 'en-CA' | 'en-IN' | 'en-NZ' | 'en-ZA' | 'ar' | 'ar-AE' | 'ar-BH' | 'ar-DZ' | 'ar-EG' | 'ar-IQ' | 'ar-JO' | 'ar-KW' | 'ar-LB' | 'ar-LY' | 'ar-MA' | 'ar-OM' | 'ar-QA' | 'ar-SA' | 'ar-SY' | 'ar-TN' | 'ar-YE' | 'bn' | 'bn-BD' | 'bn-IN' | 'cs' | 'cs-CZ' | 'da' | 'da-DK' | 'de' | 'de-AT' | 'de-CH' | 'de-DE' | 'de-LI' | 'de-LU' | 'el' | 'el-GR' | 'en-IE' | 'en-MT' | 'es' | 'es-AR' | 'es-BO' | 'es-CL' | 'es-CO' | 'es-CR' | 'es-DO' | 'es-EC' | 'es-ES' | 'es-GT' | 'es-HN' | 'es-MX' | 'es-NI' | 'es-PA' | 'es-PE' | 'es-PR' | 'es-PY' | 'es-SV' | 'es-UY' | 'es-VE' | 'et' | 'et-EE' | 'fa' | 'fa-IR' | 'fi' | 'fi-FI' | 'fil' | 'fil-PH' | 'fr' | 'fr-BE' | 'fr-CA' | 'fr-CH' | 'fr-FR' | 'fr-LU' | 'fr-MC' | 'he' | 'he-IL' | 'hi' | 'hi-IN' | 'hr' | 'hr-HR' | 'hu' | 'hu-HU' | 'id' | 'id-ID' | 'it' | 'it-CH' | 'it-IT' | 'ja' | 'ja-JP' | 'ko' | 'ko-KR' | 'lt' | 'lt-LT' | 'lv' | 'lv-LV' | 'ms' | 'ms-MY' | 'nl' | 'nl-BE' | 'nl-NL' | 'no' | 'no-NO' | 'pl' | 'pl-PL' | 'pt' | 'pt-BR' | 'pt-PT' | 'ro' | 'ro-RO' | 'ru' | 'ru-RU' | 'sk' | 'sk-SK' | 'sl' | 'sl-SI' | 'sr' | 'sr-RS' | 'sv' | 'sv-SE' | 'th' | 'th-TH' | 'tr' | 'tr-TR' | 'uk' | 'uk-UA' | 'vi' | 'vi-VN' | 'zh' | 'zh-CN' | 'zh-HK' | 'zh-TW';
 
 interface shkDateI {
     year: number;
-    month: IntRange<1,13>
-    day: IntRange<1,32>
+    month: IntRange<1,13>;
+    day: IntRange<1,32>;
 
-    hours: IntRange<0,24>
-    minutes: IntRange<0,60>
-    seconds: IntRange<0,60>
+    hours: IntRange<0,24>;
+    minutes: IntRange<0,60>;
+    seconds: IntRange<0,60>;
 }
 
-class ShkDate {
+export class ShkDate {
     private _date: shkDateI = {day: undefined, month: undefined, year: undefined, hours: undefined, minutes: undefined, seconds: undefined};
     
     private _dateFormat: allowedDateFormat = 'YMD';
@@ -24,6 +25,7 @@ class ShkDate {
     private _dateSeparator = '-'; //Date value separator. Examples: 01/01/0001 (/). 01.01.0001 (.)
     private _timeSeparator = ':'; //Time value separator. Examples: 15:15:00 (:). 15.15.00 (.) ; If separator set as 'tempo' it will set h to hour, m to minutes and s to seconds. Exemple: 01h02m03s. 
     private _fillZeros = true; //Add zero to values. Example 01/01/0001 or 1/1/1
+    private _language = navigator.language;
     private _checkIrregular = true; //Check irregular handling on update such as leap years, this is disabled when there is need to check the date as a whole and not only one part of it while updating the date.
 
     private _jsYear = new Date().getFullYear();
@@ -32,21 +34,6 @@ class ShkDate {
     private _jsHour = new Date().getHours();
     private _jsMinute = new Date().getMinutes();
     private _jsSecond = new Date().getSeconds();
-
-    private _dicMonth = {
-        1:'Jan',
-        2:'Feb',
-        3:'Mar',
-        4:'Apr',
-        5:'May',
-        6:'Jun',
-        7:'Jul',
-        8:'Aug',
-        9:'Sep',
-        10:'Oct',
-        11:'Nov',
-        12:'Dec'
-    }
 
     constructor(date?: string) {
         if(!date) {
@@ -66,7 +53,7 @@ class ShkDate {
                 if(dateSpaceSplit.length < 1 || dateSpaceSplit.length > 2) throw('Invalid date format. The string spacing is wrong. Example: YYYY-MM-DD HH:MM:SS');
                 else if(dateSpaceSplit.length == 2) {
                     this.setTime(dateSpaceSplit[1]);
-                } else {  
+                } else {
                     this._date.hours = <IntRange<0,24>>this._jsHour;
                     this._date.minutes = <IntRange<0,60>>this._jsMinute;
                     this._date.seconds = <IntRange<0,60>>this._jsSecond;
@@ -116,12 +103,18 @@ class ShkDate {
     public set fillZeros(fillZeros: boolean) { this.setFillZeros(fillZeros) };
     public setFillZeros(fillZeros: boolean) { this._fillZeros = fillZeros };
 
+    public set language(language: allowedLanguages) { this.setLanguage(language) };
+    public setLanguage(language?: allowedLanguages) {
+        if(!language) return;
+        this._language = language;
+    };
+
     public get year(): number | string { return this.getYear() };
     public getYear(): number | string  { return this._date.year < 10 ? '000' + this._date.year : this._date.year < 100 ? '00' + this._date.year : this._date.year < 1000 ? '0' + this._date.year : this._date.year.toString() };
     public set year(year: number | string ) { this.setYear(year) };
     public setYear(year: number | string ) {
         let reYear = '^[0-9]{1,4}$';
-        if(year.toString().trim() === '') year = (<IntRange<0,24>>this._jsYear).toString();
+        if(year.toString().trim() === '') { year = (<IntRange<0,24>>this._jsYear).toString() };
         year = parseInt(year.toString());
         if(new RegExp(`^${reYear}$`).test(year.toString())) {
             if(this._checkIrregular) {
@@ -138,7 +131,7 @@ class ShkDate {
     public set month(month: IntRange<1,13> | string) { this.setMonth(month) };
     public setMonth(month: IntRange<1,13> | string) {
         let reMonth = '^(0?[1-9]|1[0-2])$';
-        if(month.toString().trim() === '') month = (<IntRange<0,24>>this._jsMonth+1).toString();
+        if(month.toString().trim() === '') { (<IntRange<0,24>>this._jsMonth+1).toString() };
         month = <IntRange<1,13>>parseInt(month.toString());
         if(new RegExp(`^${reMonth}$`).test(month.toString())) {
             if(this._checkIrregular) {
@@ -155,7 +148,7 @@ class ShkDate {
     public set day(day: IntRange<1,32> | string) { this.setDay(day) };
     public setDay(day: IntRange<1,32> | string) {
         let reDay = '^([12]?[0-9]|0[1-9]|3[01])$';
-        if(day.toString().trim() === '') day = (<IntRange<0,24>>this._jsDay).toString();
+        if(day.toString().trim() === '') { day = (<IntRange<0,24>>this._jsDay).toString() };
         day = <IntRange<1,32>>parseInt(day.toString());
         if(new RegExp(`^${reDay}$`).test(day.toString())) {
             if(this._checkIrregular) {
@@ -172,7 +165,7 @@ class ShkDate {
     public set hours(hours: IntRange<0,24> | string) { this.setHours(hours) };
     public setHours(hours: IntRange<0,24> | string) {
         let reHour = '^([01]?[0-9]|2[0-3])$';
-        if(hours.toString().trim() === '') hours = (<IntRange<0,24>>this._jsHour).toString();
+        if(hours.toString().trim() === '') { hours = (<IntRange<0,24>>this._jsHour).toString() };
         if(new RegExp(`^${reHour}$`).test(hours.toString())) {
             this._date.hours = <IntRange<0,24>>parseInt(hours.toString());
         } else throw('Invalid Time format. The hour don\'t match a 00 to 23 hours format.');
@@ -183,7 +176,7 @@ class ShkDate {
     public set minutes(minutes: IntRange<0,60> | string) { this.setMinutes(minutes) };
     public setMinutes(minutes: IntRange<0,60> | string) {
         let reMinute = '^[0-5]?[0-9]$';
-        if(minutes.toString().trim() === '') minutes = (<IntRange<0,60>>this._jsMinute).toString();
+        if(minutes.toString().trim() === '') { minutes = (<IntRange<0,60>>this._jsMinute).toString() };
         if(new RegExp(`^${reMinute}$`).test(minutes.toString())) {
             this._date.minutes = <IntRange<0,60>>parseInt(minutes.toString());
         } else throw('Invalid Time format. The minutes don\'t match a 0 to 59 minutes format.');
@@ -194,7 +187,7 @@ class ShkDate {
     public set seconds(seconds: IntRange<0,60> | string) { this.setSeconds(seconds) };
     public setSeconds(seconds: IntRange<0,60> | string) {
         let reSecond = '^[0-5]?[0-9]$';
-        if(!seconds || seconds.toString().trim() === '') seconds = (<IntRange<0,60>>this._jsSecond).toString();
+        if(!seconds || seconds.toString().trim() === '') { seconds = (<IntRange<0,60>>this._jsSecond).toString() };
         if(new RegExp(`^${reSecond}$`).test(seconds.toString())) {
             this._date.seconds = <IntRange<0,60>>parseInt(seconds.toString());
         } else throw('Invalid Time format. The seconds don\'t match a 0 to 59 seconds format.');
@@ -296,7 +289,7 @@ class ShkDate {
         if(dateSpaceSplit.length < 1 || dateSpaceSplit.length > 2) throw('Invalid date format. The string spacing is wrong. Example: YYYY-MM-DD HH:MM:SS');
         else if(dateSpaceSplit.length == 2) {
             this.setTime(dateSpaceSplit[1]);
-        } else {  
+        } else {
             this._date.hours = <IntRange<0,24>>this._jsHour;
             this._date.minutes = <IntRange<0,60>>this._jsMinute;
             this._date.seconds = <IntRange<0,60>>this._jsSecond;
@@ -306,11 +299,26 @@ class ShkDate {
     }
 
     public get extMonth(): string { return this.getExtMonth() };
-    public getExtMonth(): string { return this._dicMonth[this._date.month]}
+    public getExtMonth(): string {
+        let hFillZeros = this._fillZeros === true;
+        let hFormat: allowedDateFormat = <allowedDateFormat>('' + this._dateFormat);
+        this._fillZeros = false;
+        this._dateFormat = 'YMD';
+        let date = new Date(this.getDate());
+        this._fillZeros = hFillZeros;
+        this._dateFormat = hFormat;
+        return new Intl.DateTimeFormat(this._language, { month: "long" }).format(date);
+    }
 
+    public get weekDay(): string { return this.getWeekDay() };
+    public getWeekDay(): string {
+        let hFillZeros = this._fillZeros === true;
+        let hFormat: allowedDateFormat = <allowedDateFormat>('' + this._dateFormat);
+        this._fillZeros = false;
+        this._dateFormat = 'YMD';
+        let date = new Date(this.getDate());
+        this._fillZeros = hFillZeros;
+        this._dateFormat = hFormat;
+        return new Intl.DateTimeFormat(this._language, { weekday: "long" }).format(date);
+    }
 }
-
-let date = new ShkDate();
-console.log(date.dateTime);
-
-module.exports = { ShkDate };
