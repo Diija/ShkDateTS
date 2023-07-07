@@ -10,7 +10,6 @@ export declare class ShkDate {
     private _dateSeparator;
     private _timeSeparator;
     private _fillZeros;
-    private _matchEmpty;
     private _language;
     private _checkIrregular;
     private _jsYear;
@@ -41,10 +40,6 @@ export declare class ShkDate {
     getFillZeros(): boolean;
     set fillZeros(fillZeros: boolean);
     setFillZeros(fillZeros: boolean): void;
-    get matchEmpty(): boolean;
-    getMatchEmpty(): boolean;
-    set matchEmpty(matchEmpty: boolean);
-    setMatchEmpty(matchEmpty: boolean): void;
     set language(language: allowedLanguages);
     setLanguage(language?: allowedLanguages): void;
     get year(): number | string;
