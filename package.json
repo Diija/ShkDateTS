@@ -1,7 +1,7 @@
 {
   "name": "shk-date",
   "package-name": "ShkDate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A date package to ease your life with js.",
   "repository": "Diija/ShkDateTS",
   "main": "./src/index.js",

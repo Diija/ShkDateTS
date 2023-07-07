@@ -1,4 +1,5 @@
 /node_modules
+/src/index.ts
 .gitignore
 package-lock.json
 README.md
