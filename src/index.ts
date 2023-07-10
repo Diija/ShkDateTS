@@ -15,9 +15,19 @@ interface shkDateI {
     hours: IntRange<0,24>;
     minutes: IntRange<0,60>;
     seconds: IntRange<0,60>;
+    ms: number;
 }
+
+interface shkDateOptions  {
+    [key: string]: allowedDateFormat | allowedTimeFormat | string;
+    dateFormat?: allowedDateFormat;
+    timeFormat?: allowedTimeFormat;
+    dateSeparator?: string;
+    timeSeparator?: string;
+}
+
 export class ShkDate {
-    private _date: shkDateI = {day: undefined, month: undefined, year: undefined, hours: undefined, minutes: undefined, seconds: undefined};
+    private _date: shkDateI = {day: undefined, month: undefined, year: undefined, hours: undefined, minutes: undefined, seconds: undefined, ms: undefined};
     
     private _dateFormat: allowedDateFormat = 'YMD';
     private _timeFormat: allowedTimeFormat = 'HMS';
@@ -33,8 +43,9 @@ export class ShkDate {
     private _jsHour = new Date().getHours();
     private _jsMinute = new Date().getMinutes();
     private _jsSecond = new Date().getSeconds();
+    private _jsMS = new Date().getMilliseconds();
 
-    constructor(date?: string | Date) {
+    constructor(date?: string | Date, args?: shkDateOptions) {
         if(!date) {
             this._date.day = <IntRange<1,32>>this._jsDay;
             this._date.month = <IntRange<1,13>>(this._jsMonth+1);
@@ -42,6 +53,7 @@ export class ShkDate {
             this._date.hours = <IntRange<0,24>>this._jsHour;
             this._date.minutes = <IntRange<0,60>>this._jsMinute;
             this._date.seconds = <IntRange<0,60>>this._jsSecond;
+            this._date.ms = this._jsMS;
             return;
         }
 
@@ -52,11 +64,18 @@ export class ShkDate {
             this._date.hours = <IntRange<0,24>>date.getHours();
             this._date.minutes = <IntRange<0,60>>date.getMinutes();
             this._date.seconds = <IntRange<0,60>>date.getSeconds();
+            this._date.ms = date.getMilliseconds();
             return;
         }
         
         if(typeof(date) === 'string') {
             try {
+                if(args) {
+                    Object.keys(args).forEach(argKey => {
+                        if(args[argKey] && (this as any)['_'+argKey] != undefined) (this as any)['_'+argKey] = args[argKey];
+                    })
+                }
+
                 let dateSpaceSplit = date.split(' ');
 
                 if(dateSpaceSplit.length < 1 || dateSpaceSplit.length > 2) throw('Invalid date format. The string spacing is wrong. Example: YYYY-MM-DD HH:MM:SS');
@@ -66,6 +85,7 @@ export class ShkDate {
                     this._date.hours = <IntRange<0,24>>this._jsHour;
                     this._date.minutes = <IntRange<0,60>>this._jsMinute;
                     this._date.seconds = <IntRange<0,60>>this._jsSecond;
+                    this._date.ms = this._jsMS;
                 }
                 
                 this.setDate(dateSpaceSplit[0]);
@@ -85,6 +105,7 @@ export class ShkDate {
         this._jsHour = new Date().getHours();
         this._jsMinute = new Date().getMinutes();
         this._jsSecond = new Date().getSeconds();
+        this._jsMS = new Date().getMilliseconds();
     }
 
     public get dateFormat(): allowedDateFormat { return this.getDateFormat() };
@@ -123,7 +144,7 @@ export class ShkDate {
     public set year(year: number | string ) { this.setYear(year) };
     public setYear(year: number | string ) {
         let reYear = '^[0-9]{1,4}$';
-        if(year.toString().trim() === '') { year = (<IntRange<0,24>>this._jsYear).toString() };
+        if(year.toString().trim() === '') year = (<IntRange<0,24>>this._jsYear).toString();
         year = parseInt(year.toString());
         if(new RegExp(`^${reYear}$`).test(year.toString())) {
             if(this._checkIrregular) {
@@ -140,7 +161,7 @@ export class ShkDate {
     public set month(month: IntRange<1,13> | string) { this.setMonth(month) };
     public setMonth(month: IntRange<1,13> | string) {
         let reMonth = '^(0?[1-9]|1[0-2])$';
-        if(month.toString().trim() === '') { (<IntRange<0,24>>this._jsMonth+1).toString() };
+        if(month.toString().trim() === '') month = (<IntRange<0,13>>this._jsMonth+1).toString();
         month = <IntRange<1,13>>parseInt(month.toString());
         if(new RegExp(`^${reMonth}$`).test(month.toString())) {
             if(this._checkIrregular) {
@@ -157,7 +178,7 @@ export class ShkDate {
     public set day(day: IntRange<1,32> | string) { this.setDay(day) };
     public setDay(day: IntRange<1,32> | string) {
         let reDay = '^([12]?[0-9]|0[1-9]|3[01])$';
-        if(day.toString().trim() === '') { day = (<IntRange<0,24>>this._jsDay).toString() };
+        if(day.toString().trim() === '') day = (<IntRange<0,24>>this._jsDay).toString();
         day = <IntRange<1,32>>parseInt(day.toString());
         if(new RegExp(`^${reDay}$`).test(day.toString())) {
             if(this._checkIrregular) {
@@ -202,6 +223,17 @@ export class ShkDate {
         } else throw('Invalid Time format. The seconds don\'t match a 0 to 59 seconds format.');
     };
 
+    public get ms(): number | string { return this.getMs() };
+    public getMs(): number | string { return this._date.ms };
+    public set ms(ms: number | string) { this.setMs(ms) };
+    public setMs(ms: number | string) {
+        let reMs = '^[0-9]{3}$';
+        if(!ms || ms.toString().trim() === '') { ms = this._jsMS.toString() };
+        if(new RegExp(`^${reMs}$`).test(ms.toString())) {
+            this._date.ms = <IntRange<0,60>>parseInt(ms.toString());
+        } else throw('Invalid Time format. The ms don\'t match a 0 to 999 ms format.');
+    }
+
     public get date(): string { return this.getDate() };
     public getDate(): string {
         let sDate = '';
@@ -233,7 +265,7 @@ export class ShkDate {
         let formatPosMonth = this._dateFormat.indexOf('M');
         let formatPosDay = this._dateFormat.indexOf('D');
 
-        if(dateDateSplit.length > 3) throw('Invalid date format. The string dashing is wrong. Example: YYYY-MM-DD HH:MM:SS');
+        if(dateDateSplit.length > 3) throw(`Invalid date format. The string separator is wrong. Example: YYYY-MM-DD HH:MM:SS`);
 
         switch (dateDateSplit.length) {
             case 3:
@@ -277,10 +309,12 @@ export class ShkDate {
         this._date.hours = <IntRange<0,24>>this._jsHour;
         this._date.minutes = <IntRange<0,60>>this._jsMinute;
         this._date.seconds = <IntRange<0,60>>this._jsSecond;
+        this._date.ms = this._jsMS;
 
         let dateTimeSplit = time.split(this._timeSeparator);
-        if(dateTimeSplit.length > 3) throw('Invalid date format. The string double dotting is wrong. Example: YYYY-MM-DD HH:MM:SS');
+        if(dateTimeSplit.length > 4) throw('Invalid date format. The string double dotting is wrong. Example: YYYY-MM-DD HH:MM:SS');
         switch (dateTimeSplit.length) {
+            case 4: this.setMs(dateTimeSplit[3]);
             case 3: this.setSeconds(dateTimeSplit[2]);
             case 2: this.setMinutes(dateTimeSplit[1]);
             case 1: this.setHours(dateTimeSplit[0]);
