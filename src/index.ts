@@ -16,7 +16,6 @@ interface shkDateI {
     minutes: IntRange<0,60>;
     seconds: IntRange<0,60>;
 }
-
 export class ShkDate {
     private _date: shkDateI = {day: undefined, month: undefined, year: undefined, hours: undefined, minutes: undefined, seconds: undefined};
     
@@ -35,7 +34,7 @@ export class ShkDate {
     private _jsMinute = new Date().getMinutes();
     private _jsSecond = new Date().getSeconds();
 
-    constructor(date?: string) {
+    constructor(date?: string | Date) {
         if(!date) {
             this._date.day = <IntRange<1,32>>this._jsDay;
             this._date.month = <IntRange<1,13>>(this._jsMonth+1);
@@ -43,6 +42,16 @@ export class ShkDate {
             this._date.hours = <IntRange<0,24>>this._jsHour;
             this._date.minutes = <IntRange<0,60>>this._jsMinute;
             this._date.seconds = <IntRange<0,60>>this._jsSecond;
+            return;
+        }
+
+        if(date instanceof Date) {
+            this._date.day = <IntRange<1,32>>date.getDate();
+            this._date.month = <IntRange<1,13>>(date.getMonth()+1);
+            this._date.year = date.getFullYear();
+            this._date.hours = <IntRange<0,24>>date.getHours();
+            this._date.minutes = <IntRange<0,60>>date.getMinutes();
+            this._date.seconds = <IntRange<0,60>>date.getSeconds();
             return;
         }
         
@@ -320,5 +329,8 @@ export class ShkDate {
         this._fillZeros = hFillZeros;
         this._dateFormat = hFormat;
         return new Intl.DateTimeFormat(this._language, { weekday: "long" }).format(date);
+    }
+
+    public add() {
     }
 }
