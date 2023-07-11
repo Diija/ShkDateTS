@@ -94,6 +94,5 @@ export declare class ShkDate {
     getExtMonth(): string;
     get weekDay(): string;
     getWeekDay(): string;
-    add(): void;
 }
 export {};

@@ -364,7 +364,4 @@ export class ShkDate {
         this._dateFormat = hFormat;
         return new Intl.DateTimeFormat(this._language, { weekday: "long" }).format(date);
     }
-
-    public add() {
-    }
 }
