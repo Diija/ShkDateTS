@@ -36,6 +36,7 @@ export class ShkDate {
     private _fillZeros = true; //Add zero to values. Example 01/01/0001 or 1/1/1
     private _language = navigator.language;
     private _checkIrregular = true; //Check irregular handling on update such as leap years, this is disabled when there is need to check the date as a whole and not only one part of it while updating the date.
+    private _monthsWith31d = [1,3,5,7,8,10,12];
 
     private _jsYear = new Date().getFullYear();
     private _jsMonth = new Date().getMonth();
@@ -148,7 +149,7 @@ export class ShkDate {
         year = parseInt(year.toString());
         if(new RegExp(`^${reYear}$`).test(year.toString())) {
             if(this._checkIrregular) {
-                if(this._date.month % 2 === 0 && this._date.day > 30) throw('Invalid Date format. The given month don\'t have more than 30 days.');
+                if(!this._monthsWith31d.includes(this._date.month) && this._date.day > 30) throw('Invalid Date format. The given month don\'t have more than 30 days.');
                 if(this._date.month === 2 && (this._date.day > 28 && year % 4 != 0) ) throw(`Invalid Date format. The given month don\'t have more than 28 days. ${this._date.day === 29 ? year + ' is not a leap year.' : ''}`);
                 else if(this._date.month === 2 && (this._date.day > 29 ) ) throw('Invalid Date format. The given month don\'t have more than 29 days.');
             }
@@ -165,7 +166,7 @@ export class ShkDate {
         month = <IntRange<1,13>>parseInt(month.toString());
         if(new RegExp(`^${reMonth}$`).test(month.toString())) {
             if(this._checkIrregular) {
-                if(month % 2 === 0 && this._date.day > 30) throw('Invalid Date format. The given month don\'t have more than 30 days.');
+                if(!this._monthsWith31d.includes(this._date.month) && this._date.day > 30) throw('Invalid Date format. The given month don\'t have more than 30 days.');
                 if(month === 2 && (this._date.day > 28 && this._date.year % 4 != 0) ) throw(`Invalid Date format. The given month don\'t have more than 28 days. ${this._date.day === 29 ? this._date.year + ' is not a leap year.' : ''}`);
                 else if(month === 2 && (this._date.day > 29) ) throw('Invalid Date format. The given month don\'t have more than 29 days.');
             }
@@ -182,7 +183,7 @@ export class ShkDate {
         day = <IntRange<1,32>>parseInt(day.toString());
         if(new RegExp(`^${reDay}$`).test(day.toString())) {
             if(this._checkIrregular) {
-                if(this._date.month % 2 === 0 && day > 30) throw('Invalid Date format. The given month don\'t have more than 30 days.');
+                if(!this._monthsWith31d.includes(this._date.month) && this._date.day > 30) throw('Invalid Date format. The given month don\'t have more than 30 days.');
                 if(this._date.month === 2 && (day > 28 && this._date.year % 4 != 0) ) throw(`Invalid Date format. The given month don\'t have more than 28 days. ${day === 29 ? this._date.year + ' is not a leap year.' : ''}`);
                 else if(this._date.month === 2 && (day > 29) ) throw('Invalid Date format. The given month don\'t have more than 29 days.');
             }
