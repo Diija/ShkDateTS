@@ -3,6 +3,13 @@ type IntRange<F extends number, T extends number> = Exclude<Enumerate<T>, Enumer
 type allowedDateFormat = 'DMY' | 'DYM' | 'MDY' | 'MYD' | 'YDM' | 'YMD';
 type allowedTimeFormat = 'HMS' | 'HSM' | 'MHS' | 'MSH' | 'SHM' | 'SMH';
 type allowedLanguages = 'en' | 'en-US' | 'en-GB' | 'en-AU' | 'en-CA' | 'en-IN' | 'en-NZ' | 'en-ZA' | 'ar' | 'ar-AE' | 'ar-BH' | 'ar-DZ' | 'ar-EG' | 'ar-IQ' | 'ar-JO' | 'ar-KW' | 'ar-LB' | 'ar-LY' | 'ar-MA' | 'ar-OM' | 'ar-QA' | 'ar-SA' | 'ar-SY' | 'ar-TN' | 'ar-YE' | 'bn' | 'bn-BD' | 'bn-IN' | 'cs' | 'cs-CZ' | 'da' | 'da-DK' | 'de' | 'de-AT' | 'de-CH' | 'de-DE' | 'de-LI' | 'de-LU' | 'el' | 'el-GR' | 'en-IE' | 'en-MT' | 'es' | 'es-AR' | 'es-BO' | 'es-CL' | 'es-CO' | 'es-CR' | 'es-DO' | 'es-EC' | 'es-ES' | 'es-GT' | 'es-HN' | 'es-MX' | 'es-NI' | 'es-PA' | 'es-PE' | 'es-PR' | 'es-PY' | 'es-SV' | 'es-UY' | 'es-VE' | 'et' | 'et-EE' | 'fa' | 'fa-IR' | 'fi' | 'fi-FI' | 'fil' | 'fil-PH' | 'fr' | 'fr-BE' | 'fr-CA' | 'fr-CH' | 'fr-FR' | 'fr-LU' | 'fr-MC' | 'he' | 'he-IL' | 'hi' | 'hi-IN' | 'hr' | 'hr-HR' | 'hu' | 'hu-HU' | 'id' | 'id-ID' | 'it' | 'it-CH' | 'it-IT' | 'ja' | 'ja-JP' | 'ko' | 'ko-KR' | 'lt' | 'lt-LT' | 'lv' | 'lv-LV' | 'ms' | 'ms-MY' | 'nl' | 'nl-BE' | 'nl-NL' | 'no' | 'no-NO' | 'pl' | 'pl-PL' | 'pt' | 'pt-BR' | 'pt-PT' | 'ro' | 'ro-RO' | 'ru' | 'ru-RU' | 'sk' | 'sk-SK' | 'sl' | 'sl-SI' | 'sr' | 'sr-RS' | 'sv' | 'sv-SE' | 'th' | 'th-TH' | 'tr' | 'tr-TR' | 'uk' | 'uk-UA' | 'vi' | 'vi-VN' | 'zh' | 'zh-CN' | 'zh-HK' | 'zh-TW';
+interface shkDateOptions {
+    [key: string]: allowedDateFormat | allowedTimeFormat | string;
+    dateFormat?: allowedDateFormat;
+    timeFormat?: allowedTimeFormat;
+    dateSeparator?: string;
+    timeSeparator?: string;
+}
 export declare class ShkDate {
     private _date;
     private _dateFormat;
@@ -18,7 +25,8 @@ export declare class ShkDate {
     private _jsHour;
     private _jsMinute;
     private _jsSecond;
-    constructor(date?: string);
+    private _jsMS;
+    constructor(date?: string | Date, args?: shkDateOptions);
     private updateJSDate;
     get dateFormat(): allowedDateFormat;
     getDateFormat(): allowedDateFormat;
@@ -66,6 +74,10 @@ export declare class ShkDate {
     getSeconds(): IntRange<0, 60> | string;
     set seconds(seconds: IntRange<0, 60> | string);
     setSeconds(seconds: IntRange<0, 60> | string): void;
+    get ms(): number | string;
+    getMs(): number | string;
+    set ms(ms: number | string);
+    setMs(ms: number | string): void;
     get date(): string;
     getDate(): string;
     set date(date: string);
