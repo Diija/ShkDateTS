@@ -1,8 +1,8 @@
-type Enumerate<N extends number, Acc extends number[] = []> = Acc['length'] extends N ? Acc[number] : Enumerate<N, [...Acc, Acc['length']]>;
-type IntRange<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>;
-type allowedDateFormat = 'DMY' | 'DYM' | 'MDY' | 'MYD' | 'YDM' | 'YMD';
-type allowedTimeFormat = 'HMS' | 'HSM' | 'MHS' | 'MSH' | 'SHM' | 'SMH';
-type allowedLanguages = 'en' | 'en-US' | 'en-GB' | 'en-AU' | 'en-CA' | 'en-IN' | 'en-NZ' | 'en-ZA' | 'ar' | 'ar-AE' | 'ar-BH' | 'ar-DZ' | 'ar-EG' | 'ar-IQ' | 'ar-JO' | 'ar-KW' | 'ar-LB' | 'ar-LY' | 'ar-MA' | 'ar-OM' | 'ar-QA' | 'ar-SA' | 'ar-SY' | 'ar-TN' | 'ar-YE' | 'bn' | 'bn-BD' | 'bn-IN' | 'cs' | 'cs-CZ' | 'da' | 'da-DK' | 'de' | 'de-AT' | 'de-CH' | 'de-DE' | 'de-LI' | 'de-LU' | 'el' | 'el-GR' | 'en-IE' | 'en-MT' | 'es' | 'es-AR' | 'es-BO' | 'es-CL' | 'es-CO' | 'es-CR' | 'es-DO' | 'es-EC' | 'es-ES' | 'es-GT' | 'es-HN' | 'es-MX' | 'es-NI' | 'es-PA' | 'es-PE' | 'es-PR' | 'es-PY' | 'es-SV' | 'es-UY' | 'es-VE' | 'et' | 'et-EE' | 'fa' | 'fa-IR' | 'fi' | 'fi-FI' | 'fil' | 'fil-PH' | 'fr' | 'fr-BE' | 'fr-CA' | 'fr-CH' | 'fr-FR' | 'fr-LU' | 'fr-MC' | 'he' | 'he-IL' | 'hi' | 'hi-IN' | 'hr' | 'hr-HR' | 'hu' | 'hu-HU' | 'id' | 'id-ID' | 'it' | 'it-CH' | 'it-IT' | 'ja' | 'ja-JP' | 'ko' | 'ko-KR' | 'lt' | 'lt-LT' | 'lv' | 'lv-LV' | 'ms' | 'ms-MY' | 'nl' | 'nl-BE' | 'nl-NL' | 'no' | 'no-NO' | 'pl' | 'pl-PL' | 'pt' | 'pt-BR' | 'pt-PT' | 'ro' | 'ro-RO' | 'ru' | 'ru-RU' | 'sk' | 'sk-SK' | 'sl' | 'sl-SI' | 'sr' | 'sr-RS' | 'sv' | 'sv-SE' | 'th' | 'th-TH' | 'tr' | 'tr-TR' | 'uk' | 'uk-UA' | 'vi' | 'vi-VN' | 'zh' | 'zh-CN' | 'zh-HK' | 'zh-TW';
+declare type Enumerate<N extends number, Acc extends number[] = []> = Acc['length'] extends N ? Acc[number] : Enumerate<N, [...Acc, Acc['length']]>;
+declare type IntRange<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>;
+declare type allowedDateFormat = 'DMY' | 'DYM' | 'MDY' | 'MYD' | 'YDM' | 'YMD';
+declare type allowedTimeFormat = 'HMS' | 'HSM' | 'MHS' | 'MSH' | 'SHM' | 'SMH';
+declare type allowedLanguages = 'en' | 'en-US' | 'en-GB' | 'en-AU' | 'en-CA' | 'en-IN' | 'en-NZ' | 'en-ZA' | 'ar' | 'ar-AE' | 'ar-BH' | 'ar-DZ' | 'ar-EG' | 'ar-IQ' | 'ar-JO' | 'ar-KW' | 'ar-LB' | 'ar-LY' | 'ar-MA' | 'ar-OM' | 'ar-QA' | 'ar-SA' | 'ar-SY' | 'ar-TN' | 'ar-YE' | 'bn' | 'bn-BD' | 'bn-IN' | 'cs' | 'cs-CZ' | 'da' | 'da-DK' | 'de' | 'de-AT' | 'de-CH' | 'de-DE' | 'de-LI' | 'de-LU' | 'el' | 'el-GR' | 'en-IE' | 'en-MT' | 'es' | 'es-AR' | 'es-BO' | 'es-CL' | 'es-CO' | 'es-CR' | 'es-DO' | 'es-EC' | 'es-ES' | 'es-GT' | 'es-HN' | 'es-MX' | 'es-NI' | 'es-PA' | 'es-PE' | 'es-PR' | 'es-PY' | 'es-SV' | 'es-UY' | 'es-VE' | 'et' | 'et-EE' | 'fa' | 'fa-IR' | 'fi' | 'fi-FI' | 'fil' | 'fil-PH' | 'fr' | 'fr-BE' | 'fr-CA' | 'fr-CH' | 'fr-FR' | 'fr-LU' | 'fr-MC' | 'he' | 'he-IL' | 'hi' | 'hi-IN' | 'hr' | 'hr-HR' | 'hu' | 'hu-HU' | 'id' | 'id-ID' | 'it' | 'it-CH' | 'it-IT' | 'ja' | 'ja-JP' | 'ko' | 'ko-KR' | 'lt' | 'lt-LT' | 'lv' | 'lv-LV' | 'ms' | 'ms-MY' | 'nl' | 'nl-BE' | 'nl-NL' | 'no' | 'no-NO' | 'pl' | 'pl-PL' | 'pt' | 'pt-BR' | 'pt-PT' | 'ro' | 'ro-RO' | 'ru' | 'ru-RU' | 'sk' | 'sk-SK' | 'sl' | 'sl-SI' | 'sr' | 'sr-RS' | 'sv' | 'sv-SE' | 'th' | 'th-TH' | 'tr' | 'tr-TR' | 'uk' | 'uk-UA' | 'vi' | 'vi-VN' | 'zh' | 'zh-CN' | 'zh-HK' | 'zh-TW';
 interface shkDateOptions {
     [key: string]: allowedDateFormat | allowedTimeFormat | string;
     dateFormat?: allowedDateFormat;
@@ -19,6 +19,7 @@ export declare class ShkDate {
     private _fillZeros;
     private _language;
     private _checkIrregular;
+    private _monthsWith31d;
     private _jsYear;
     private _jsMonth;
     private _jsDay;

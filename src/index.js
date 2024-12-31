@@ -1,5 +1,9 @@
-export class ShkDate {
-    constructor(date, args) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ShkDate = void 0;
+var ShkDate = /** @class */ (function () {
+    function ShkDate(date, args) {
+        var _this = this;
         this._date = { day: undefined, month: undefined, year: undefined, hours: undefined, minutes: undefined, seconds: undefined, ms: undefined };
         this._dateFormat = 'YMD';
         this._timeFormat = 'HMS';
@@ -8,6 +12,7 @@ export class ShkDate {
         this._fillZeros = true; //Add zero to values. Example 01/01/0001 or 1/1/1
         this._language = navigator.language;
         this._checkIrregular = true; //Check irregular handling on update such as leap years, this is disabled when there is need to check the date as a whole and not only one part of it while updating the date.
+        this._monthsWith31d = [1, 3, 5, 7, 8, 10, 12];
         this._jsYear = new Date().getFullYear();
         this._jsMonth = new Date().getMonth();
         this._jsDay = new Date().getDate();
@@ -38,12 +43,12 @@ export class ShkDate {
         if (typeof (date) === 'string') {
             try {
                 if (args) {
-                    Object.keys(args).forEach(argKey => {
-                        if (args[argKey] && this['_' + argKey] != undefined)
-                            this['_' + argKey] = args[argKey];
+                    Object.keys(args).forEach(function (argKey) {
+                        if (args[argKey] && _this['_' + argKey] != undefined)
+                            _this['_' + argKey] = args[argKey];
                     });
                 }
-                let dateSpaceSplit = date.split(' ');
+                var dateSpaceSplit = date.split(' ');
                 if (dateSpaceSplit.length < 1 || dateSpaceSplit.length > 2)
                     throw ('Invalid date format. The string spacing is wrong. Example: YYYY-MM-DD HH:MM:SS');
                 else if (dateSpaceSplit.length == 2) {
@@ -63,7 +68,7 @@ export class ShkDate {
             return;
         }
     }
-    updateJSDate() {
+    ShkDate.prototype.updateJSDate = function () {
         this._jsYear = new Date().getFullYear();
         this._jsMonth = new Date().getMonth();
         this._jsDay = new Date().getDate();
@@ -71,72 +76,100 @@ export class ShkDate {
         this._jsMinute = new Date().getMinutes();
         this._jsSecond = new Date().getSeconds();
         this._jsMS = new Date().getMilliseconds();
-    }
-    get dateFormat() { return this.getDateFormat(); }
+    };
+    Object.defineProperty(ShkDate.prototype, "dateFormat", {
+        get: function () { return this.getDateFormat(); },
+        set: function (dateFormat) { this.setDateFormat(dateFormat); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getDateFormat() { return this._dateFormat; }
+    ShkDate.prototype.getDateFormat = function () { return this._dateFormat; };
     ;
-    set dateFormat(dateFormat) { this.setDateFormat(dateFormat); }
     ;
-    setDateFormat(dateFormat) { this._dateFormat = dateFormat; }
+    ShkDate.prototype.setDateFormat = function (dateFormat) { this._dateFormat = dateFormat; };
     ;
-    get timeFormat() { return this.getTimeFormat(); }
+    Object.defineProperty(ShkDate.prototype, "timeFormat", {
+        get: function () { return this.getTimeFormat(); },
+        set: function (timeFormat) { this.setTimeFormat(timeFormat); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getTimeFormat() { return this._timeFormat; }
+    ShkDate.prototype.getTimeFormat = function () { return this._timeFormat; };
     ;
-    set timeFormat(timeFormat) { this.setTimeFormat(timeFormat); }
     ;
-    setTimeFormat(timeFormat) { this._timeFormat = timeFormat; }
+    ShkDate.prototype.setTimeFormat = function (timeFormat) { this._timeFormat = timeFormat; };
     ;
-    get dateSeparator() { return this.getDateSeparator(); }
+    Object.defineProperty(ShkDate.prototype, "dateSeparator", {
+        get: function () { return this.getDateSeparator(); },
+        set: function (dateSeparator) { this.setDateSeparator(dateSeparator); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getDateSeparator() { return this._dateSeparator; }
+    ShkDate.prototype.getDateSeparator = function () { return this._dateSeparator; };
     ;
-    set dateSeparator(dateSeparator) { this.setDateSeparator(dateSeparator); }
     ;
-    setDateSeparator(dateSeparator) { this._dateSeparator = dateSeparator; }
+    ShkDate.prototype.setDateSeparator = function (dateSeparator) { this._dateSeparator = dateSeparator; };
     ;
-    get timeSeparator() { return this.getTimeSeparator(); }
+    Object.defineProperty(ShkDate.prototype, "timeSeparator", {
+        get: function () { return this.getTimeSeparator(); },
+        set: function (timeSeparator) { this.setTimeSeparator(timeSeparator); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getTimeSeparator() { return this._timeSeparator; }
+    ShkDate.prototype.getTimeSeparator = function () { return this._timeSeparator; };
     ;
-    set timeSeparator(timeSeparator) { this.setTimeSeparator(timeSeparator); }
     ;
-    setTimeSeparator(timeSeparator) { this._timeSeparator = timeSeparator; }
+    ShkDate.prototype.setTimeSeparator = function (timeSeparator) { this._timeSeparator = timeSeparator; };
     ;
-    get fillZeros() { return this.getFillZeros(); }
+    Object.defineProperty(ShkDate.prototype, "fillZeros", {
+        get: function () { return this.getFillZeros(); },
+        set: function (fillZeros) { this.setFillZeros(fillZeros); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getFillZeros() { return this._fillZeros; }
+    ShkDate.prototype.getFillZeros = function () { return this._fillZeros; };
     ;
-    set fillZeros(fillZeros) { this.setFillZeros(fillZeros); }
     ;
-    setFillZeros(fillZeros) { this._fillZeros = fillZeros; }
+    ShkDate.prototype.setFillZeros = function (fillZeros) { this._fillZeros = fillZeros; };
     ;
-    set language(language) { this.setLanguage(language); }
+    Object.defineProperty(ShkDate.prototype, "language", {
+        set: function (language) { this.setLanguage(language); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    setLanguage(language) {
+    ShkDate.prototype.setLanguage = function (language) {
         if (!language)
             return;
         this._language = language;
-    }
+    };
     ;
-    get year() { return this.getYear(); }
+    Object.defineProperty(ShkDate.prototype, "year", {
+        get: function () { return this.getYear(); },
+        set: function (year) { this.setYear(year); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getYear() { return this._date.year < 10 ? '000' + this._date.year : this._date.year < 100 ? '00' + this._date.year : this._date.year < 1000 ? '0' + this._date.year : this._date.year.toString(); }
+    ShkDate.prototype.getYear = function () { return this._date.year < 10 ? '000' + this._date.year : this._date.year < 100 ? '00' + this._date.year : this._date.year < 1000 ? '0' + this._date.year : this._date.year.toString(); };
     ;
-    set year(year) { this.setYear(year); }
     ;
-    setYear(year) {
-        let reYear = '^[0-9]{1,4}$';
+    ShkDate.prototype.setYear = function (year) {
+        var reYear = '^[0-9]{1,4}$';
         if (year.toString().trim() === '')
             year = this._jsYear.toString();
         year = parseInt(year.toString());
-        if (new RegExp(`^${reYear}$`).test(year.toString())) {
+        if (new RegExp("^".concat(reYear, "$")).test(year.toString())) {
             if (this._checkIrregular) {
-                if (this._date.month % 2 === 0 && this._date.day > 30)
+                if (!this._monthsWith31d.includes(this._date.month) && this._date.day > 30)
                     throw ('Invalid Date format. The given month don\'t have more than 30 days.');
                 if (this._date.month === 2 && (this._date.day > 28 && year % 4 != 0))
-                    throw (`Invalid Date format. The given month don\'t have more than 28 days. ${this._date.day === 29 ? year + ' is not a leap year.' : ''}`);
+                    throw ("Invalid Date format. The given month don't have more than 28 days. ".concat(this._date.day === 29 ? year + ' is not a leap year.' : ''));
                 else if (this._date.month === 2 && (this._date.day > 29))
                     throw ('Invalid Date format. The given month don\'t have more than 29 days.');
             }
@@ -144,25 +177,29 @@ export class ShkDate {
         }
         else
             throw ('Invalid Date format. The year don\'t match a year format.');
-    }
+    };
     ;
-    get month() { return this.getMonth(); }
+    Object.defineProperty(ShkDate.prototype, "month", {
+        get: function () { return this.getMonth(); },
+        set: function (month) { this.setMonth(month); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getMonth() { return this._date.month < 10 && this._fillZeros ? '0' + this._date.month : this._date.month.toString(); }
+    ShkDate.prototype.getMonth = function () { return this._date.month < 10 && this._fillZeros ? '0' + this._date.month : this._date.month.toString(); };
     ;
-    set month(month) { this.setMonth(month); }
     ;
-    setMonth(month) {
-        let reMonth = '^(0?[1-9]|1[0-2])$';
+    ShkDate.prototype.setMonth = function (month) {
+        var reMonth = '^(0?[1-9]|1[0-2])$';
         if (month.toString().trim() === '')
             month = (this._jsMonth + 1).toString();
         month = parseInt(month.toString());
-        if (new RegExp(`^${reMonth}$`).test(month.toString())) {
+        if (new RegExp("^".concat(reMonth, "$")).test(month.toString())) {
             if (this._checkIrregular) {
-                if (month % 2 === 0 && this._date.day > 30)
+                if (!this._monthsWith31d.includes(this._date.month) && this._date.day > 30)
                     throw ('Invalid Date format. The given month don\'t have more than 30 days.');
                 if (month === 2 && (this._date.day > 28 && this._date.year % 4 != 0))
-                    throw (`Invalid Date format. The given month don\'t have more than 28 days. ${this._date.day === 29 ? this._date.year + ' is not a leap year.' : ''}`);
+                    throw ("Invalid Date format. The given month don't have more than 28 days. ".concat(this._date.day === 29 ? this._date.year + ' is not a leap year.' : ''));
                 else if (month === 2 && (this._date.day > 29))
                     throw ('Invalid Date format. The given month don\'t have more than 29 days.');
             }
@@ -170,25 +207,29 @@ export class ShkDate {
         }
         else
             throw ('Invalid Date format. The month don\'t match a 1 to 12 month format.');
-    }
+    };
     ;
-    get day() { return this.getDay(); }
+    Object.defineProperty(ShkDate.prototype, "day", {
+        get: function () { return this.getDay(); },
+        set: function (day) { this.setDay(day); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getDay() { return this._date.day < 10 && this._fillZeros ? '0' + this._date.day : this._date.day.toString(); }
+    ShkDate.prototype.getDay = function () { return this._date.day < 10 && this._fillZeros ? '0' + this._date.day : this._date.day.toString(); };
     ;
-    set day(day) { this.setDay(day); }
     ;
-    setDay(day) {
-        let reDay = '^([12]?[0-9]|0[1-9]|3[01])$';
+    ShkDate.prototype.setDay = function (day) {
+        var reDay = '^([12]?[0-9]|0[1-9]|3[01])$';
         if (day.toString().trim() === '')
             day = this._jsDay.toString();
         day = parseInt(day.toString());
-        if (new RegExp(`^${reDay}$`).test(day.toString())) {
+        if (new RegExp("^".concat(reDay, "$")).test(day.toString())) {
             if (this._checkIrregular) {
-                if (this._date.month % 2 === 0 && day > 30)
+                if (!this._monthsWith31d.includes(this._date.month) && this._date.day > 30)
                     throw ('Invalid Date format. The given month don\'t have more than 30 days.');
                 if (this._date.month === 2 && (day > 28 && this._date.year % 4 != 0))
-                    throw (`Invalid Date format. The given month don\'t have more than 28 days. ${day === 29 ? this._date.year + ' is not a leap year.' : ''}`);
+                    throw ("Invalid Date format. The given month don't have more than 28 days. ".concat(day === 29 ? this._date.year + ' is not a leap year.' : ''));
                 else if (this._date.month === 2 && (day > 29))
                     throw ('Invalid Date format. The given month don\'t have more than 29 days.');
             }
@@ -196,116 +237,137 @@ export class ShkDate {
         }
         else
             throw ('Invalid Date format. The day don\'t match a 1 to 31 days format.');
-    }
+    };
     ;
-    get hours() { return this.getHours(); }
+    Object.defineProperty(ShkDate.prototype, "hours", {
+        get: function () { return this.getHours(); },
+        set: function (hours) { this.setHours(hours); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getHours() { return this._date.hours < 10 && this._fillZeros ? '0' + this._date.hours : this._date.hours.toString(); }
+    ShkDate.prototype.getHours = function () { return this._date.hours < 10 && this._fillZeros ? '0' + this._date.hours : this._date.hours.toString(); };
     ;
-    set hours(hours) { this.setHours(hours); }
     ;
-    setHours(hours) {
-        let reHour = '^([01]?[0-9]|2[0-3])$';
+    ShkDate.prototype.setHours = function (hours) {
+        var reHour = '^([01]?[0-9]|2[0-3])$';
         if (hours.toString().trim() === '') {
             hours = this._jsHour.toString();
         }
         ;
-        if (new RegExp(`^${reHour}$`).test(hours.toString())) {
+        if (new RegExp("^".concat(reHour, "$")).test(hours.toString())) {
             this._date.hours = parseInt(hours.toString());
         }
         else
             throw ('Invalid Time format. The hour don\'t match a 00 to 23 hours format.');
-    }
+    };
     ;
-    get minutes() { return this.getMinutes(); }
+    Object.defineProperty(ShkDate.prototype, "minutes", {
+        get: function () { return this.getMinutes(); },
+        set: function (minutes) { this.setMinutes(minutes); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getMinutes() { return this._date.minutes < 10 && this._fillZeros ? '0' + this._date.minutes : this._date.minutes.toString(); }
+    ShkDate.prototype.getMinutes = function () { return this._date.minutes < 10 && this._fillZeros ? '0' + this._date.minutes : this._date.minutes.toString(); };
     ;
-    set minutes(minutes) { this.setMinutes(minutes); }
     ;
-    setMinutes(minutes) {
-        let reMinute = '^[0-5]?[0-9]$';
+    ShkDate.prototype.setMinutes = function (minutes) {
+        var reMinute = '^[0-5]?[0-9]$';
         if (minutes.toString().trim() === '') {
             minutes = this._jsMinute.toString();
         }
         ;
-        if (new RegExp(`^${reMinute}$`).test(minutes.toString())) {
+        if (new RegExp("^".concat(reMinute, "$")).test(minutes.toString())) {
             this._date.minutes = parseInt(minutes.toString());
         }
         else
             throw ('Invalid Time format. The minutes don\'t match a 0 to 59 minutes format.');
-    }
+    };
     ;
-    get seconds() { return this.getSeconds(); }
+    Object.defineProperty(ShkDate.prototype, "seconds", {
+        get: function () { return this.getSeconds(); },
+        set: function (seconds) { this.setSeconds(seconds); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getSeconds() { return this._date.seconds < 10 && this._fillZeros ? '0' + this._date.seconds : this._date.seconds.toString(); }
-    set seconds(seconds) { this.setSeconds(seconds); }
+    ShkDate.prototype.getSeconds = function () { return this._date.seconds < 10 && this._fillZeros ? '0' + this._date.seconds : this._date.seconds.toString(); };
     ;
-    setSeconds(seconds) {
-        let reSecond = '^[0-5]?[0-9]$';
+    ShkDate.prototype.setSeconds = function (seconds) {
+        var reSecond = '^[0-5]?[0-9]$';
         if (!seconds || seconds.toString().trim() === '') {
             seconds = this._jsSecond.toString();
         }
         ;
-        if (new RegExp(`^${reSecond}$`).test(seconds.toString())) {
+        if (new RegExp("^".concat(reSecond, "$")).test(seconds.toString())) {
             this._date.seconds = parseInt(seconds.toString());
         }
         else
             throw ('Invalid Time format. The seconds don\'t match a 0 to 59 seconds format.');
-    }
+    };
     ;
-    get ms() { return this.getMs(); }
+    Object.defineProperty(ShkDate.prototype, "ms", {
+        get: function () { return this.getMs(); },
+        set: function (ms) { this.setMs(ms); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getMs() { return this._date.ms; }
+    ShkDate.prototype.getMs = function () { return this._date.ms; };
     ;
-    set ms(ms) { this.setMs(ms); }
     ;
-    setMs(ms) {
-        let reMs = '^[0-9]{3}$';
+    ShkDate.prototype.setMs = function (ms) {
+        var reMs = '^[0-9]{3}$';
         if (!ms || ms.toString().trim() === '') {
             ms = this._jsMS.toString();
         }
         ;
-        if (new RegExp(`^${reMs}$`).test(ms.toString())) {
+        if (new RegExp("^".concat(reMs, "$")).test(ms.toString())) {
             this._date.ms = parseInt(ms.toString());
         }
         else
             throw ('Invalid Time format. The ms don\'t match a 0 to 999 ms format.');
-    }
-    get date() { return this.getDate(); }
+    };
+    Object.defineProperty(ShkDate.prototype, "date", {
+        get: function () { return this.getDate(); },
+        set: function (date) { this.setDate(date); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getDate() {
-        let sDate = '';
-        let arrDateFormat = Array.from(this._dateFormat);
-        arrDateFormat.forEach((letter, index) => {
+    ShkDate.prototype.getDate = function () {
+        var _this = this;
+        var sDate = '';
+        var arrDateFormat = Array.from(this._dateFormat);
+        arrDateFormat.forEach(function (letter, index) {
             if (letter === 'Y')
-                sDate += this.getYear();
+                sDate += _this.getYear();
             if (letter === 'M')
-                sDate += this.getMonth();
+                sDate += _this.getMonth();
             if (letter === 'D')
-                sDate += this.getDay();
+                sDate += _this.getDay();
             if (arrDateFormat.length - 1 != index)
-                sDate += this._dateSeparator;
+                sDate += _this._dateSeparator;
         });
         return sDate;
-    }
+    };
     ;
-    set date(date) { this.setDate(date); }
     ;
-    setDate(date) {
+    ShkDate.prototype.setDate = function (date) {
         //This part validation cannot be set individually like Time because the Date is being validated as a whole,
         //so irregular details like leap years has to be in account with the whole Date and not the parts itself
         // as is done in the individual set's.
-        let reDay = '^([12]?[0-9]|0[1-9]|3[01])$';
-        let reMonth = '^(0?[1-9]|1[0-2])$';
-        let reYear = '^[0-9]{1,4}$';
-        let dateDateSplit = date.split(this._dateSeparator);
+        var reDay = '^([12]?[0-9]|0[1-9]|3[01])$';
+        var reMonth = '^(0?[1-9]|1[0-2])$';
+        var reYear = '^[0-9]{1,4}$';
+        var dateDateSplit = date.split(this._dateSeparator);
         this._checkIrregular = false;
-        let formatPosYear = this._dateFormat.indexOf('Y');
-        let formatPosMonth = this._dateFormat.indexOf('M');
-        let formatPosDay = this._dateFormat.indexOf('D');
+        var formatPosYear = this._dateFormat.indexOf('Y');
+        var formatPosMonth = this._dateFormat.indexOf('M');
+        var formatPosDay = this._dateFormat.indexOf('D');
         if (dateDateSplit.length > 3)
-            throw (`Invalid date format. The string separator is wrong. Example: YYYY-MM-DD HH:MM:SS`);
+            throw ("Invalid date format. The string separator is wrong. Example: YYYY-MM-DD HH:MM:SS");
         switch (dateDateSplit.length) {
             case 3:
                 if (formatPosDay === 2)
@@ -330,52 +392,57 @@ export class ShkDate {
                     this.setYear(dateDateSplit[0]);
                 this._checkIrregular = true;
                 //SPECIFIC HANDLING - This one ignores _checkIrregular.
-                if (this._date.month % 2 === 0 && this._date.day > 30)
+                if (!this._monthsWith31d.includes(this._date.month) && this._date.day > 30)
                     throw ('Invalid Date format. The given month don\'t have more than 30 days.');
                 if (this._date.month === 2 && (this._date.day > 28 && this._date.year % 4 != 0))
-                    throw (`Invalid Date format. The given month don\'t have more than 28 days. ${this._date.day === 29 ? this._date.year + ' is not a leap year.' : ''}`);
+                    throw ("Invalid Date format. The given month don't have more than 28 days. ".concat(this._date.day === 29 ? this._date.year + ' is not a leap year.' : ''));
                 else if (this._date.month === 2 && (this._date.day > 29))
                     throw ('Invalid Date format. The given month don\'t have more than 29 days.');
         }
-    }
-    get time() { return this.getTime(); }
+    };
+    Object.defineProperty(ShkDate.prototype, "time", {
+        get: function () { return this.getTime(); },
+        set: function (time) { this.setTime(time); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getTime() {
-        let sTime = '';
-        let arrTimeFormat = Array.from(this._timeFormat);
-        arrTimeFormat.forEach((letter, index) => {
+    ShkDate.prototype.getTime = function () {
+        var _this = this;
+        var sTime = '';
+        var arrTimeFormat = Array.from(this._timeFormat);
+        arrTimeFormat.forEach(function (letter, index) {
             if (letter === 'H') {
-                sTime += this.getHours();
-                if (this._timeSeparator === 'tempo')
+                sTime += _this.getHours();
+                if (_this._timeSeparator === 'tempo')
                     sTime += 'h';
             }
             ;
             if (letter === 'M') {
-                sTime += this.getMinutes();
-                if (this.timeSeparator === 'tempo')
+                sTime += _this.getMinutes();
+                if (_this.timeSeparator === 'tempo')
                     sTime += 'm';
             }
             ;
             if (letter === 'S') {
-                sTime += this.getSeconds();
-                if (this.timeSeparator === 'tempo')
+                sTime += _this.getSeconds();
+                if (_this.timeSeparator === 'tempo')
                     sTime += 's';
             }
             ;
-            if (this._timeSeparator != 'tempo' && arrTimeFormat.length - 1 != index)
-                sTime += this._timeSeparator;
+            if (_this._timeSeparator != 'tempo' && arrTimeFormat.length - 1 != index)
+                sTime += _this._timeSeparator;
         });
         return sTime;
-    }
-    set time(time) { this.setTime(time); }
+    };
     ;
-    setTime(time) {
+    ShkDate.prototype.setTime = function (time) {
         this.updateJSDate();
         this._date.hours = this._jsHour;
         this._date.minutes = this._jsMinute;
         this._date.seconds = this._jsSecond;
         this._date.ms = this._jsMS;
-        let dateTimeSplit = time.split(this._timeSeparator);
+        var dateTimeSplit = time.split(this._timeSeparator);
         if (dateTimeSplit.length > 4)
             throw ('Invalid date format. The string double dotting is wrong. Example: YYYY-MM-DD HH:MM:SS');
         switch (dateTimeSplit.length) {
@@ -384,16 +451,20 @@ export class ShkDate {
             case 2: this.setMinutes(dateTimeSplit[1]);
             case 1: this.setHours(dateTimeSplit[0]);
         }
-    }
-    get dateTime() { return this.getDateTime(); }
+    };
+    Object.defineProperty(ShkDate.prototype, "dateTime", {
+        get: function () { return this.getDateTime(); },
+        set: function (dateTime) { this.setDateTime(dateTime); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getDateTime() {
-        return `${this.getDate()} ${this.getTime()}`;
-    }
-    set dateTime(dateTime) { this.setDateTime(dateTime); }
+    ShkDate.prototype.getDateTime = function () {
+        return "".concat(this.getDate(), " ").concat(this.getTime());
+    };
     ;
-    setDateTime(dateTime) {
-        let dateSpaceSplit = dateTime.split(' ');
+    ShkDate.prototype.setDateTime = function (dateTime) {
+        var dateSpaceSplit = dateTime.split(' ');
         if (dateSpaceSplit.length < 1 || dateSpaceSplit.length > 2)
             throw ('Invalid date format. The string spacing is wrong. Example: YYYY-MM-DD HH:MM:SS');
         else if (dateSpaceSplit.length == 2) {
@@ -405,29 +476,39 @@ export class ShkDate {
             this._date.seconds = this._jsSecond;
         }
         this.setDate(dateSpaceSplit[0]);
-    }
-    get extMonth() { return this.getExtMonth(); }
+    };
+    Object.defineProperty(ShkDate.prototype, "extMonth", {
+        get: function () { return this.getExtMonth(); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getExtMonth() {
-        let hFillZeros = this._fillZeros === true;
-        let hFormat = ('' + this._dateFormat);
+    ShkDate.prototype.getExtMonth = function () {
+        var hFillZeros = this._fillZeros === true;
+        var hFormat = ('' + this._dateFormat);
         this._fillZeros = false;
         this._dateFormat = 'YMD';
-        let date = new Date(this.getDate());
+        var date = new Date(this.getDate());
         this._fillZeros = hFillZeros;
         this._dateFormat = hFormat;
         return new Intl.DateTimeFormat(this._language, { month: "long" }).format(date);
-    }
-    get weekDay() { return this.getWeekDay(); }
+    };
+    Object.defineProperty(ShkDate.prototype, "weekDay", {
+        get: function () { return this.getWeekDay(); },
+        enumerable: false,
+        configurable: true
+    });
     ;
-    getWeekDay() {
-        let hFillZeros = this._fillZeros === true;
-        let hFormat = ('' + this._dateFormat);
+    ShkDate.prototype.getWeekDay = function () {
+        var hFillZeros = this._fillZeros === true;
+        var hFormat = ('' + this._dateFormat);
         this._fillZeros = false;
         this._dateFormat = 'YMD';
-        let date = new Date(this.getDate());
+        var date = new Date(this.getDate());
         this._fillZeros = hFillZeros;
         this._dateFormat = hFormat;
         return new Intl.DateTimeFormat(this._language, { weekday: "long" }).format(date);
-    }
-}
+    };
+    return ShkDate;
+}());
+exports.ShkDate = ShkDate;
