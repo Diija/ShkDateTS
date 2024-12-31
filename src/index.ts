@@ -284,7 +284,7 @@ export class ShkDate {
             
             this._checkIrregular = true;
             //SPECIFIC HANDLING - This one ignores _checkIrregular.
-            if(this._date.month % 2 === 0 && this._date.day > 30) throw('Invalid Date format. The given month don\'t have more than 30 days.');
+            if(!this._monthsWith31d.includes(this._date.month) && this._date.day > 30) throw('Invalid Date format. The given month don\'t have more than 30 days.');
             if(this._date.month === 2 && (this._date.day > 28 && this._date.year % 4 != 0) ) throw(`Invalid Date format. The given month don\'t have more than 28 days. ${this._date.day === 29 ? this._date.year + ' is not a leap year.' : ''}`);
             else if(this._date.month === 2 && (this._date.day > 29 ) ) throw('Invalid Date format. The given month don\'t have more than 29 days.');
         }
