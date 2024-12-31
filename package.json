@@ -1,7 +1,7 @@
 {
   "name": "shk-date",
   "package-name": "ShkDate",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A date package to ease your life with js.",
   "repository": "Diija/ShkDateTS",
   "main": "./src/index.js",
@@ -20,6 +20,5 @@
     "webpack-dev-server": "^4.15.1",
     "typescript": "^5.1.6"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
